@@ -1,4 +1,4 @@
-import {reqGoodsInfo} from '@/api'
+import {reqGoodsInfo,reqAddOrUpdateShopCart} from '@/api'
 const state = {
     goodInfo:{}
 };
@@ -9,6 +9,14 @@ const actions ={
                 commit('GETGOODINFO',res.data)
             }
         })
+    },
+    async addOrUpdateShopCart({commit},{skuId,skuNum}){
+         let result = await reqAddOrUpdateShopCart(skuId,skuNum);
+        if(result.code == 200){
+            return "OK"
+        }else{
+            return Promise.reject(new Error("fail"))
+        }
     }
 };
 const mutations ={

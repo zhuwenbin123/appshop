@@ -80,13 +80,13 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input class="itxt" />
+                <input class="itxt" autocomplete="off" v-model.number="skuNum" @change="changeSkunNum"/>
                 <a href="javascript:"
-                   class="plus">+</a>
-                <a class="mins">-</a>
+                   class="plus" @click="skuNum++">+</a>
+                <a class="mins" @click="skuNum>1?skuNum--:skuNum = 1">-</a>
               </div>
               <div class="add">
-                <a>加入购物车</a>
+                <a @click="addShopCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -352,7 +352,9 @@ import ImageList from './ImageList'
 export default {
   name: 'Detail',
   data() {
-    return {}
+    return {
+        skuNum:1
+    }
   },
   components: { Zoom, ImageList },
   mounted() {
@@ -365,6 +367,23 @@ export default {
       })
       saleValue.isChecked = 1
     },
+    changeSkunNum(event){
+        let value = event.target.value *1;
+        if(isNaN(value) || value < 1){
+            this.skuNum = 1
+        }else{
+            this.skuNum = parseInt(value)
+        }
+    },
+     async addShopCart(){
+         try {
+             await this.$store.dispatch("addOrUpdateShopCart",{skuId:this.$route.params.skuid,skuNum:this.skuNum});
+             this.$router.push({name:'addCartSuccess'})
+         } catch (error) {
+            alert(error.message)
+         }
+       
+    }
   },
   computed: {
     ...mapGetters(['categoryView', 'skuInfo', 'spuSaleAttrList']),

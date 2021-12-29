@@ -7,6 +7,7 @@ import Search from '@/pages/Search';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import Detail from '@/pages/Detail'
+import AddCartSuccess from '@/pages/AddCartSuccess'
 let originPush = VueRouter.prototype.push;
 let originReplace = VueRouter.prototype.replace;
 VueRouter.prototype.push = function(location,resolve,reject){
@@ -50,6 +51,11 @@ const routes = [
       component:Register,
       meta:{show:false}
     },
+    {   name:'addCartSuccess',
+        path:'/addCartSuccess',
+        component:AddCartSuccess,
+        meta:{show:false}
+      },
     {
       path:'/',
       redirect:'/home'

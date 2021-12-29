@@ -11,4 +11,6 @@ export const reqGetfloorList = ()=>mockRequest.get('/floor');
 // 获取搜索模块数据
 export const reqGetSearchInfo = (params)=>requests({url:"/list",method:"post",data:params});
 // 获取产品信息
-export const reqGoodsInfo = (skuid)=>requests({url:`/item/${skuid}`,method:"get"})
+export const reqGoodsInfo = (skuid)=>requests({url:`/item/${skuid}`,method:"get"});
+// 添加购物车
+export const reqAddOrUpdateShopCart = (skuId,skuNum)=>requests({url:`/cart/addToCart/${skuId}/${skuNum}`,method:'post'})
