@@ -28,7 +28,8 @@ export default {
   },
   components: {ListContainer,Recommend,Rank,Like,Floor,Banner},
   mounted () {
-    this.$store.dispatch('getFloorList')
+    this.$store.dispatch('getFloorList');
+    this.$store.dispatch('getUserInfo')
   },
   methods: {},
   computed:{

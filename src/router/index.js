@@ -6,8 +6,9 @@ import Home from '@/pages/Home';
 import Search from '@/pages/Search';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
-import Detail from '@/pages/Detail'
-import AddCartSuccess from '@/pages/AddCartSuccess'
+import Detail from '@/pages/Detail';
+import AddCartSuccess from '@/pages/AddCartSuccess';
+import ShopCart from '@/pages/ShopCart'
 let originPush = VueRouter.prototype.push;
 let originReplace = VueRouter.prototype.replace;
 VueRouter.prototype.push = function(location,resolve,reject){
@@ -59,7 +60,12 @@ const routes = [
     {
       path:'/',
       redirect:'/home'
-    }
+    },
+    {   name:'shopcart',
+        path:'/shopcart',
+        component:ShopCart,
+        meta:{show:false}
+      },
 ]
 
 const router = new VueRouter({

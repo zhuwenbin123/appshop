@@ -32,8 +32,11 @@ export default {
     };
   },
   components: {},
-  mounted () {},
-  methods: {}
+  computed:{
+      skuInfo(){
+          return JSON.parse(sessionStorage.getItem('SKUINFO'))
+      }
+  }
 }
 </script>
 
