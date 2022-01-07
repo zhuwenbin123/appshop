@@ -12,7 +12,7 @@
           </p>
           <p v-else>
               <a>{{userName}}</a>
-              <a class="register">退出登入</a>
+              <a class="register" @click="loginOut">退出登入</a>
           </p>
         </div>
         <div class="typeList">
@@ -73,6 +73,14 @@ export default {
         location.query = this.$route.query
         this.$router.push(location)
       }
+    },
+    async loginOut(){
+        try {
+           await this.$store.dispatch('userLoginOut')
+           this.$router.push('/home')
+        } catch (error) {
+            alert(error)
+        }
     }
   },
   computed: {

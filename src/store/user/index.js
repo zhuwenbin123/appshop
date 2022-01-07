@@ -1,7 +1,7 @@
-import { reqGetPhone,reqUserRegister,reqUserLogin,reqUserInfo } from '@/api'
+import { reqGetPhone,reqUserRegister,reqUserLogin,reqUserInfo,reqLoginOut } from '@/api'
 const state = {
     code:'',
-    token:'',
+    token:localStorage.getItem('TOKEN'),
     userInfo:{},
 }
 const actions = {
@@ -27,16 +27,28 @@ const actions = {
     async userLogin({commit},data){
         let result = await reqUserLogin(data);
         if(result.code == 200){
-            commit("USERLOGIN",result.data.token)
+            commit("USERLOGIN",result.data.token);
+            localStorage.setItem("TOKEN",result.data.token)
             return "OK"
         }else{
             return Promise.reject(new Error('faile'))
         }
     },
+    // 获取用户信息
     async getUserInfo({commit}){
         let result = await reqUserInfo();
         if(result.code == 200){
             commit("GETUSERINFO",result.data);
+            return "OK"
+        }else{
+            return Promise.reject(new Error('faile'))
+        }
+    },
+    // 退出登入
+    async userLoginOut({commit}){
+        let result = await reqLoginOut();
+        if(result.code == 200){
+            commit("CLEAR")
             return "OK"
         }else{
             return Promise.reject(new Error('faile'))
@@ -52,6 +64,11 @@ const mutations = {
     },
     GETUSERINFO(state,value){
         state.userInfo = value
+    },
+    CLEAR(state){
+        state.userInfo = {};
+        state.token = '';
+        localStorage.removeItem("TOKEN")
     }
 }
 const getters = {}

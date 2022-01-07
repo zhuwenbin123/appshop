@@ -8,7 +8,8 @@ import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import Detail from '@/pages/Detail';
 import AddCartSuccess from '@/pages/AddCartSuccess';
-import ShopCart from '@/pages/ShopCart'
+import ShopCart from '@/pages/ShopCart';
+import store from '@/store';
 let originPush = VueRouter.prototype.push;
 let originReplace = VueRouter.prototype.replace;
 VueRouter.prototype.push = function(location,resolve,reject){
@@ -73,6 +74,29 @@ const router = new VueRouter({
   scrollBehavior(){
       return {y:0}
   }
+})
+router.beforeEach(async (to,from,next) => {
+    let token = store.state.user.token;
+    let name = store.state.user.userInfo.name;
+    if(token){
+        if(to.path =="/login"){
+            next('/home')
+        }else{
+            if(name){
+                next()
+            }else{
+                try {
+                    await store.dispatch("getUserInfo");
+                    next()
+                } catch (error) {
+                    await store.dispatch("userLoginOut");
+                    next("/login")
+                }
+            }
+        }
+    }else{
+        next()
+    }
 })
 
 export default router
