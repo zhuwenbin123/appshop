@@ -4,24 +4,21 @@ const state = {
     oderInfo:[],
 };
 const actions ={
-    getUserAddress({commit}){
-        reqAddressInfo().then(res=>{
-            if(res.code == 200){
-                commit("GETUSERADDRESS",res.data)
-            }
-        })
+    async getUserAddress({commit}){
+        let result =  await reqAddressInfo();
+        if(result.code == 200){
+            commit("GETUSERADDRESS",result.data)
+        }
     },
-    getOrderInfo({commit}){
-        reqOderInfo().then(res=>{
-            if(res.code == 200){
-                commit("GETORDERINFO",res.data)
-            }
-        })
+    async getOrderInfo({commit}){
+        let result = await reqOderInfo();
+        if(result.code == 200){
+            commit("GETORDERINFO",result.data)
+        }
     }
 };
 const mutations = {
     GETUSERADDRESS(state,value){
-        console.log(value);
         state.userAddress = value
     },
     GETORDERINFO(state,value){

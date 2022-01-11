@@ -12,7 +12,7 @@
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
   </div>
-</template>s
+</template>
 
 <script>
 import Swiper from "swiper";
