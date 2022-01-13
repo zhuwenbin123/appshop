@@ -11,6 +11,7 @@ import AddCartSuccess from '@/pages/AddCartSuccess';
 import ShopCart from '@/pages/ShopCart';
 import Trade from '@/pages/Trade';
 import Pay from '@/pages/Pay';
+import PaySuccess from '@/pages/PaySuccess';
 
 import store from '@/store';
 let originPush = VueRouter.prototype.push;
@@ -81,6 +82,12 @@ const routes = [
         name:'pay',
         path:'/pay',
         component:Pay,
+        meta:{show:false}
+    },
+    {   
+        name:'paySuccess',
+        path:'/paySuccess',
+        component:PaySuccess,
         meta:{show:false}
     },
 ]

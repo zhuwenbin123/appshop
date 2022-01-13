@@ -82,7 +82,7 @@
       </div>
     </div>
     <div class="sub clearFix">
-      <router-link class="subBtn" to="/pay">提交订单</router-link>
+      <a class="subBtn" @click="submitOrder">提交订单</a>
     </div>
   </div>
 </template>
@@ -93,7 +93,8 @@ import{mapState}from 'vuex'
     name: 'Trade',
     data() {
         return {
-            msg:''
+            msg:'',
+            orderId:''
         }
     },
     mounted() {
@@ -113,6 +114,25 @@ import{mapState}from 'vuex'
         changeDefault(address,addressInfo){
             addressInfo.forEach(item=>item.isDefault = 0);
             address.isDefault = 1
+        },
+        submitOrder(){
+            let {tradeNo} = this.orderInfo;
+            let data = {
+                consignee:this.userDefaultAddress.orderInfo,
+                consigneeTel:this.userDefaultAddress.phoneNum,
+                deliveryAddress:this.userDefaultAddress.fullAddress,
+                paymentWay:"ONLINE",
+                orderComment:this.msg,
+                orderDetailList:this.orderInfo.detailArrayList
+            }
+            this.$API.reqSubmitOrder(tradeNo,data).then(res=>{
+                if(res.code == 200){
+                    this.orderId = res.data;
+                    this.$router.push('/pay?orderId='+this.orderId)
+                }else{
+                    console.log(res.data);
+                }
+            })
         }
     }
   }
