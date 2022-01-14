@@ -80,8 +80,9 @@ export default {
        async userLogin(){
           try {
               const {phone,password} = this;
-              (phone&&password)&& await this.$store.dispatch("userLogin",{phone,password})
-              this.$router.push('/home')
+              (phone&&password)&& await this.$store.dispatch("userLogin",{phone,password});
+              let toPath = this.$route.query.redirect || "/home"
+              this.$router.push(toPath)
           } catch (error) {
               alert(error.message)
           }
