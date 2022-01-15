@@ -36,7 +36,7 @@ VueRouter.prototype.replace = function(location,resolve,reject){
 const routes = [
     {
       path:"/home",
-      component:Home,
+      component:()=>import("@/pages/Home"),
       meta:{show:true}
     },
     {   
